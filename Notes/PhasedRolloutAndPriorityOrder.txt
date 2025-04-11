@@ -1,0 +1,33 @@
+
+Phased Rollout & Priority Order
+	1.	Phase 1: Public Access & Role Selection
+	•	Landing Page: A simple, informative landing page with a clear CTA.
+	•	Role Selection Page: Allows users to choose between Teen, Company, or Admin.
+	2.	Phase 2: Authentication & Onboarding
+	•	Sign In/Sign Up Pages: Separate pages for each role, including the necessary onboarding flows.
+	•	Onboarding for Teens: Capture demographics, interests, parental consent, and verification.
+	•	Onboarding for Companies: Capture business info and verification.
+	•	Admin Sign-In: Code-based login for secure admin access.
+	3.	Phase 3: Individual Dashboards
+	•	Teen Dashboard: With side menu (Home/Swipe Interface, My Sessions, Analytics, Settings, Help/Tutorials).
+	•	Company Dashboard: With side menu (Dashboard/Home, Sessions, Reviews, Payment Processing, Bonus Application, Settings).
+	•	Admin Dashboard: With side menu (Dashboard/Home, Companies Management, Teens Management, Sessions/Surveys Monitoring, Audit Logs, Read-Only View, Details Tabs).
+	4.	Phase 4: Data Integration & Interconnected Views
+	•	Connect dashboards to their respective databases (Teens, Companies, Surveys, Payment Transactions, Audit Logging).
+	•	Implement the Admin “View Details” function that aggregates data from all databases for full oversight.
+	5.	Phase 5: Payment & Bonus System
+	•	Integrate payment processing options (Venmo, PayPal, direct bank transfers) with instant transfer setup.
+	•	Implement the dynamic commission model and the bonus application mechanism (reward button and filtering options).
+	6.	Phase 6: Advanced Features & Reporting
+	•	Develop detailed Analytics and Export options (charts, graphs, CSV exports).
+	•	Integrate Audit Logging with comprehensive logging of major actions.
+
+How Each Module Connects
+	•	Public Pages (Landing, Role Selection) serve as the initial entry point; they don’t require database connections but lead to the authentication flow.
+	•	Authentication & Onboarding pages collect and validate data that is then stored in their respective databases (Teen, Company).
+	•	Dashboards for each role are built to pull data from these databases, and each dashboard includes a side menu for navigating to sub-pages.
+	•	Admin Dashboard not only offers management and oversight but also includes a “View Details” section that cross-references data from all databases for a complete system view.
+	•	Payment and Bonus Modules update and retrieve financial data from the Payment Transactions Database and integrate with the main dashboard analytics.
+	•	Audit Logging records major system actions and ensures all interactions are traceable.
+
+

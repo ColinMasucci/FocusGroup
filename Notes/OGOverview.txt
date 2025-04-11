@@ -1,0 +1,657 @@
+flowchart TD
+    %% Landing & Role Selection
+    A[Landing Page (/)] --> B[Choose Your Account (/account/select-role)]
+    
+    %% Role-specific paths from Role Selection
+    B --> |Teen| C[Teen Sign In/Sign Up Choice]
+    B --> |Company| D[Company Sign In/Sign Up Choice]
+    B --> |Admin| E[Admin Sign In]
+    
+    %% Teen Path
+    C --> F1[Teen Sign Up (/account/teen/signup)]
+    C --> F2[Teen Sign In (/account/teen/signin)]
+    
+    F1 --> G1[Teen Onboarding (Demographics, Interests, Verification)]
+    F2 --> G2[Validate Teen Credentials]
+    
+    G1 --> H1[Store in Teen Database]
+    G2 --> H1
+    
+    H1 --> I1[Teen Dashboard (/teen/dashboard)]
+    I1 --> J1[Home/Swipe Interface]
+    I1 --> J2[My Sessions]
+    I1 --> J3[Analytics]
+    I1 --> J4[Settings]
+    I1 --> J5[Help/Tutorials]
+    
+    %% Company Path
+    D --> F3[Company Sign Up (/account/company/signup)]
+    D --> F4[Company Sign In (/account/company/signin)]
+    
+    F3 --> G3[Company Onboarding (Business Info, Email Verification)]
+    F4 --> G4[Validate Company Credentials]
+    
+    G3 --> H2[Store in Company Database]
+    G4 --> H2
+    
+    H2 --> I2[Company Dashboard (/company/dashboard)]
+    I2 --> J6[Dashboard/Home]
+    I2 --> J7[Session Creation & Management]
+    I2 --> J8[Review Management]
+    I2 --> J9[Payment Processing]
+    I2 --> J10[Bonus Application & Filtering]
+    I2 --> J11[Settings]
+    
+    %% Admin Path
+    E --> F5[Admin Sign In (/admin/signin)]
+    F5 --> G5[Admin Verification (Code-based)]
+    G5 --> H3[Admin Account Setup]
+    H3 --> I3[Admin Dashboard (/admin/dashboard)]
+    I3 --> J12[Dashboard/Home]
+    I3 --> J13[Companies Management]
+    I3 --> J14[Teens Management]
+    I3 --> J15[Sessions/Surveys Monitoring]
+    I3 --> J16[Audit Logs]
+    I3 --> J17[Read-Only View: All Accounts]
+    I3 --> J18[Details Tabs]
+    
+    J18 --> K1[Company Details (Sessions, Reviews, Payments)]
+    J18 --> K2[Teen Details (Participation, Reviews, Payments)]
+    J18 --> K3[Survey Details (Interactions, Feedback, Metrics)]
+    
+    %% Payment & Audit Logging Flows (cross-cutting)
+    J1 --> L[Join Session]
+    L --> M[Record Performance & Reviews]
+    M --> N[Calculate Commission & Bonus Eligibility]
+    N --> O[Payment Processing (Venmo/PayPal/Bank)]
+    O --> P[Store in Payment Transactions Database]
+    P --> Q[Admin Financial Tracking]
+    
+    M --> R[Log Major Actions]
+    R --> S[Store in Audit Logging Database]
+    
+    %% Emphasize: Direct access to dashboards is only through authentication
+    A --- |"Direct access denied without Sign In"| T[Dashboards Inaccessible Without Authentication]
+
+Comprehensive App Layout
+A. Pages & Sections
+1. Public Pages
+	•	Landing Page (/):
+Introduces the app, explains its purpose, and provides a call-to-action (CTA) to “Choose Your Account.”
+	•	Role Selection Page (/account/select-role):
+Allows visitors to choose their role: Teen, Company, or Admin.
+	•	Sign In/Sign Up Pages (/account/signin & /account/signup):
+Separate authentication pages for each role (with slight variations in the forms and verification requirements).
+2. Teen-Specific Pages
+	•	Teen Dashboard (/teen/dashboard):
+Contains a side menu with:
+	•	Home/Swipe Interface: Displays focus group cards (Tinder-like swiping).
+	•	My Sessions: List of sessions the teen has participated in.
+	•	Analytics: Charts/graphs showing averages (payment, session time, ratings) with export options.
+	•	Settings: Allows editing of non-core profile data.
+	•	Help/Tutorials: Onboarding guides and FAQs.
+3. Company-Specific Pages
+	•	Company Dashboard (/company/dashboard):
+Contains a side menu with:
+	•	Dashboard/Home: Overview of session performance and key metrics.
+	•	Sessions:
+	•	Session Creation Page: Form to create focus group sessions.
+	•	Session Management Page: List of current and past sessions.
+	•	Reviews: Aggregated teen reviews and ratings.
+	•	Payment Processing: Payment details, commission breakdown, and expense tracking.
+	•	Bonus Application: Page to flag eligible teens for an extra 5% bonus.
+	•	Settings: Company profile management and preferences.
+4. Admin-Specific Pages
+	•	Admin Dashboard (/admin/dashboard):
+Contains a side menu with:
+	•	Dashboard/Home: High-level metrics (overall platform performance, user engagement, financial summaries).
+	•	Companies Management:
+	•	List of company accounts.
+	•	Company Details Tab: In-depth logs of sessions, reviews, and payments.
+	•	Teens Management:
+	•	List of teen accounts.
+	•	Teen Details Tab: Detailed logs of session participation, reviews, and payments.
+	•	Sessions/Surveys Monitoring:
+	•	List of all focus group sessions.
+	•	Survey Details Tab: Aggregated data on each survey (interaction, feedback, performance).
+	•	Audit Logs: Logs of major actions (session creation, review submission, payment processing) with export capabilities.
+	•	Read-Only View (All Accounts): A view to browse every account without editing privileges.
+
+B. Databases
+	1.	Teen Database:
+	•	Stores teen profiles (demographics, interests, verification status), session participation records, reviews submitted, and payment records.
+	2.	Company Database:
+	•	Stores company profiles (business details, verification status), focus group session creation details, reviews received, and financial transactions.
+	3.	Surveys Database:
+	•	Contains focus group session data: session details (time, duration, mode), participant lists, performance ratings, bonus flags, and session feedback.
+	4.	Payment Transactions Database:
+	•	Tracks all financial transactions: per-participant payments, commissions, bonus applications, total funds, and expense data.
+	5.	Audit Logging Database:
+	•	Logs major system actions (session creation, review submissions, payment processing) with timestamps and user identifiers for oversight and compliance.
+
+C. High-Level Flow Overview
+	1.	Public Access & Role Selection:
+	•	A user lands on the Landing Page, selects their role, and is directed to the appropriate Sign In/Sign Up page.
+	2.	Authentication & Onboarding:
+	•	Based on the role, users complete a tailored onboarding process:
+	•	Teens: Provide demographic data and complete identity/parental verification.
+	•	Companies: Provide business details and complete email verification.
+	•	Admins: Sign in via a code-based system.
+	•	Onboarding data is saved into the corresponding database(s).
+	3.	Dashboard Access:
+	•	After authentication, users are taken to their role-specific dashboards (Teens, Companies, or Admins), which are accessible only after sign in.
+	4.	Navigation & Interaction:
+	•	Each dashboard has a side menu allowing users to navigate between sub-pages (e.g., Home, Sessions, Analytics, Settings).
+	•	The Admin Dashboard provides a “View Details” function to see interconnected data across all databases.
+	5.	Data Integration & Interconnections:
+	•	Data flows from onboarding to the respective databases.
+	•	The Surveys Database links teen participation with company sessions.
+	•	Payment and audit data are integrated for financial and compliance oversight.
+	6.	Security & Audit Logging:
+	•	Access to any account dashboard requires authentication.
+	•	All major actions are logged in the Audit Logging Database.
+	•	Data is secured and encrypted as needed.
+
+Modular Page Breakdown & Connectivity
+Now, each module (page) is explained in terms of its function and its connection to the overall system (including the databases).
+
+Module 1: Landing Page
+Purpose:
+Introduce the app, its purpose, and provide a clear CTA to “Choose Your Account.”
+Components & Connectivity:
+	•	Visuals & Messaging: Communicates the value of the app.
+	•	CTA Button: Links to the Role Selection page.
+	•	Database Connection:
+	•	No direct database connection on this page; it’s a static informational page.
+	•	Security:
+	•	Ensures that no account-specific data is accessible without signing in.
+
+Module 2: Role Selection Page
+Purpose:
+Let users choose their role (Teen, Company, Admin).
+Components & Connectivity:
+	•	Role Options:
+	•	Buttons or links for each role.
+	•	Navigation:
+	•	Each option directs the user to the respective Sign In/Sign Up pages.
+	•	Database Connection:
+	•	This page doesn’t interact with databases directly; it serves as a gateway to the authentication system.
+	•	Security:
+	•	Direct access to account dashboards is not allowed without selecting a role and signing in.
+
+Module 3: Sign In / Sign Up Pages
+Purpose:
+Authenticate users securely and collect onboarding data.
+Components & Connectivity:
+	•	Forms:
+	•	Role-specific forms (Teens: demographic data, parental consent; Companies: business email, basic info; Admins: code-based entry).
+	•	Onboarding Steps:
+	•	Teens complete identity verification (via Onfido/Jumio) and parental consent.
+	•	Database Connectivity:
+	•	Teen Data: Stored in the Teen Database.
+	•	Company Data: Stored in the Company Database.
+	•	Admin Data: Stored as admin records (access controlled).
+	•	Security:
+	•	These pages are the sole entry point for account access.
+
+Module 4: Teen Dashboard
+Purpose:
+Provide teens with an interface to browse sessions, review their participation, and manage their profile.
+Components & Connectivity:
+	•	Side Menu with Tabs:
+	•	Home/Swipe Interface:
+	•	Displays focus group cards (session details, earnings, company info).
+	•	Database: Data for available sessions comes from the Surveys Database (linked with Teen Database for eligibility).
+	•	My Sessions:
+	•	Lists sessions joined by the teen.
+	•	Database: Pulls session history from the Teen Database and Surveys Database.
+	•	Analytics:
+	•	Shows charts/graphs (average payment, session time, ratings).
+	•	Database: Aggregates data from the Teen Database and Payment Transactions Database.
+	•	Settings:
+	•	Lets teens update optional profile information.
+	•	Database: Updates data in the Teen Database.
+	•	Help/Tutorials:
+	•	Provides onboarding guides.
+	•	Connectivity:
+	•	The dashboard pulls data from multiple databases (Teen, Surveys, Payment Transactions).
+	•	Security:
+	•	Accessible only after authentication.
+
+Module 5: Company Dashboard
+Purpose:
+Allow companies to manage focus group sessions, review teen performance, process payments, and manage bonuses.
+Components & Connectivity:
+	•	Side Menu with Tabs:
+	•	Dashboard/Home:
+	•	Displays overall metrics (session performance, earnings).
+	•	Database: Aggregates data from the Company and Surveys Databases.
+	•	Sessions:
+	•	Session Creation Page:
+	•	Form to create sessions (set rates, demographic filters).
+	•	Database: Data is stored in the Surveys Database and linked to the Company Database.
+	•	Session Management Page:
+	•	Lists active/past sessions.
+	•	Database: Pulls from the Surveys Database.
+	•	Reviews:
+	•	Displays aggregated teen reviews and ratings.
+	•	Database: Data from the Surveys Database and Teen Reviews stored in the Teen Database.
+	•	Payment Processing:
+	•	Shows payment details and commission breakdown.
+	•	Database: Connects to the Payment Transactions Database.
+	•	Bonus Application:
+	•	Interface to flag eligible teens (via a “reward” button).
+	•	Database: Updates bonus flags in the Surveys and Payment Transactions Databases.
+	•	Settings:
+	•	Company profile management.
+	•	Database: Updates data in the Company Database.
+	•	Connectivity:
+	•	The dashboard communicates with multiple databases (Company, Surveys, Payment Transactions).
+	•	Security:
+	•	Accessible only after business email verification and sign-in.
+
+Module 6: Admin Dashboard
+Purpose:
+Provide comprehensive oversight, auditing, and reporting capabilities across the entire platform.
+Components & Connectivity:
+	•	Side Menu with Tabs:
+	•	Dashboard/Home:
+	•	High-level metrics and system performance.
+	•	Database: Aggregates data from all databases.
+	•	Companies Management:
+	•	List of company accounts.
+	•	Company Details Tab:
+	•	In-depth logs (sessions, reviews, payments) for each company.
+	•	Database: Pulls from the Company and Surveys Databases.
+	•	Teens Management:
+	•	List of teen accounts.
+	•	Teen Details Tab:
+	•	Detailed logs of session participation, reviews, and payments.
+	•	Database: Pulls from the Teen and Surveys Databases.
+	•	Sessions/Surveys Monitoring:
+	•	Overview of all focus group sessions.
+	•	Survey Details Tab:
+	•	Aggregated session data including participant interactions, feedback, and performance metrics.
+	•	Database: Surveys Database.
+	•	Audit Logs:
+	•	Logs of major actions with export options.
+	•	Database: Audit Logging Database.
+	•	Read-Only View (All Accounts):
+	•	Allows browsing of every account without editing.
+	•	Database: Connects to all user databases.
+	•	Connectivity:
+	•	Admin dashboard integrates data from all databases (Teen, Company, Surveys, Payment Transactions, Audit Logging).
+	•	Security:
+	•	Strict code-based sign-in; access is read-only for the “View All Accounts” section.
+
+Module 7: Database Infrastructure
+Databases Overview:
+	•	Teen Database:
+Contains teen profiles, demographic data, session history, reviews, and payment records.
+	•	Company Database:
+Contains company profiles, verification data, session creation info, reviews, and financial transactions.
+	•	Surveys Database:
+Contains focus group session details, participant lists, performance ratings, bonus flags, and feedback.
+	•	Payment Transactions Database:
+Tracks detailed payment records, total funds, expenses, and commission calculations.
+	•	Audit Logging Database:
+Logs major actions (session creation, review submissions, payment processing) with timestamps.
+Connectivity:
+	•	Each module interacts with the relevant databases to fetch and update data.
+	•	The Admin “View Details” feature aggregates and correlates data across all databases for complete oversight.
+
+8. Flow Summary
+	1.	User Access Flow:
+	•	Landing Page → Role Selection → Sign In/Sign Up → Onboarding
+Data is stored in the corresponding databases (Teen, Company, Surveys, etc.).
+	2.	Dashboard Access:
+	•	Post-authentication, users are redirected to their respective dashboards, where the side menu allows navigation between sub-pages.
+	3.	Interconnected Data:
+	•	The Admin Dashboard provides a “View Details” function to see the entire system’s interconnections (sessions, reviews, payments) across databases.
+	4.	Payment & Bonus Flow:
+	•	Companies set session rates; teen performance is recorded and used to calculate commission.
+	•	Bonus flags can be applied via a “reward” button; all financial data is tracked in the Payment Transactions Database.
+	5.	Audit Logging:
+	•	Major actions are logged in the Audit Logging Database, ensuring traceability.
+
+
+Phased Rollout & Priority Order
+	1.	Phase 1: Public Access & Role Selection
+	•	Landing Page: A simple, informative landing page with a clear CTA.
+	•	Role Selection Page: Allows users to choose between Teen, Company, or Admin.
+	2.	Phase 2: Authentication & Onboarding
+	•	Sign In/Sign Up Pages: Separate pages for each role, including the necessary onboarding flows.
+	•	Onboarding for Teens: Capture demographics, interests, parental consent, and verification.
+	•	Onboarding for Companies: Capture business info and verification.
+	•	Admin Sign-In: Code-based login for secure admin access.
+	3.	Phase 3: Individual Dashboards
+	•	Teen Dashboard: With side menu (Home/Swipe Interface, My Sessions, Analytics, Settings, Help/Tutorials).
+	•	Company Dashboard: With side menu (Dashboard/Home, Sessions, Reviews, Payment Processing, Bonus Application, Settings).
+	•	Admin Dashboard: With side menu (Dashboard/Home, Companies Management, Teens Management, Sessions/Surveys Monitoring, Audit Logs, Read-Only View, Details Tabs).
+	4.	Phase 4: Data Integration & Interconnected Views
+	•	Connect dashboards to their respective databases (Teens, Companies, Surveys, Payment Transactions, Audit Logging).
+	•	Implement the Admin “View Details” function that aggregates data from all databases for full oversight.
+	5.	Phase 5: Payment & Bonus System
+	•	Integrate payment processing options (Venmo, PayPal, direct bank transfers) with instant transfer setup.
+	•	Implement the dynamic commission model and the bonus application mechanism (reward button and filtering options).
+	6.	Phase 6: Advanced Features & Reporting
+	•	Develop detailed Analytics and Export options (charts, graphs, CSV exports).
+	•	Integrate Audit Logging with comprehensive logging of major actions.
+
+How Each Module Connects
+	•	Public Pages (Landing, Role Selection) serve as the initial entry point; they don’t require database connections but lead to the authentication flow.
+	•	Authentication & Onboarding pages collect and validate data that is then stored in their respective databases (Teen, Company).
+	•	Dashboards for each role are built to pull data from these databases, and each dashboard includes a side menu for navigating to sub-pages.
+	•	Admin Dashboard not only offers management and oversight but also includes a “View Details” section that cross-references data from all databases for a complete system view.
+	•	Payment and Bonus Modules update and retrieve financial data from the Payment Transactions Database and integrate with the main dashboard analytics.
+	•	Audit Logging records major system actions and ensures all interactions are traceable.
+
+
+Focus Group App – Comprehensive Prompt
+
+1. Overview & App Purpose
+Focus Group App is a dynamic platform designed to connect companies with teens for valuable market research and feedback. It facilitates direct interactions between companies and teenage participants while managing feedback, reviews, and secure payments. The goal is to empower companies with authentic insights and enable teens to participate in engaging focus groups—all within a safe, transparent ecosystem.
+Key Objectives:
+	•	Facilitate Market Research Sessions:
+Enable companies to design, schedule, and manage focus groups.
+	•	Enable Direct Teen-Company Interactions:
+Maintain teen anonymity while allowing meaningful interactions.
+	•	Manage Feedback and Reviews:
+Allow both parties to rate and review each other for continuous improvement.
+	•	Handle Secure Payments:
+Use a dynamic system that calculates performance-based earnings and transparent billing.
+
+2. Core User Types & Authentication Flows
+User Roles:
+	•	Admins:
+Oversee the platform, verify users, monitor sessions, manage financials, and have full access to detailed logs.
+	•	Companies:
+Create and manage sessions, process payments, review teen performance, and set focus group criteria.
+	•	Teens:
+Participate in sessions, provide feedback, and view personalized analytics—all while remaining anonymous to companies.
+Authentication Flows:
+	•	Admin:
+Uses code-based verification.
+	•	Company:
+Business email verification.
+	•	Teen:
+Age and identity verification via third-party services (e.g., Onfido/Jumio) combined with email/phone-based parental consent.
+Note: Optional biometric checks (facial recognition) are a future consideration; they are not implemented now.
+
+3. User Flows
+Admin Flows
+	•	Company Verification:
+Review and approve company registrations via business email verification.
+	•	Teen Verification Oversight:
+Monitor teen identity verification (with parental consent where required).
+	•	Session Monitoring & Management:
+Oversee all focus group sessions, track participant metrics, and manage statuses.
+	•	Platform Metrics & Reporting:
+Access comprehensive dashboards for KPIs, user engagement, and financial reporting.
+	•	Details Tabs:
+	•	Company Details: Separate views for sessions created, teen reviews received, payment records, etc.
+	•	Teen Details: Logs of sessions participated in, companies engaged with, payment history, and performance ratings.
+	•	Survey Details: Aggregated data on each survey’s lifecycle, including participant interactions, feedback, and payment statuses.
+Company Flows
+	•	Registration & Verification:
+Sign up with a business email and complete verification steps.
+	•	Session Creation & Scheduling:
+Create focus group cards with details (in-person/online, timing, duration, demographic filters).
+	•	Payment Processing:
+Process payments per participant with a dynamic commission based on teen performance.
+Companies can flag eligible teens for an extra 5% bonus via a “reward” button when a teen receives a five-star review, and they have filtering options to view which teens they have or have not worked with.
+	•	Review Management:
+View aggregated teen reviews and ratings to gain insights.
+Teen Flows
+	•	Profile Creation & Verification:
+Sign up by providing basic demographic data (via predetermined checkboxes for interests, product preferences, etc.) and complete secure identity verification.
+	•	Session Discovery & Booking:
+Use a Tinder-like swipe interface (right to apply, left to reject) to browse focus group opportunities.
+	•	Payment Receipt:
+View net earnings for sessions (flat rate adjusted by performance-based commission).
+	•	Feedback Submission:
+Rate companies and leave detailed comments (similar to Google Reviews).
+
+4. Page Structure
+Public Pages
+	•	/ - Landing Page:
+Overview of the app’s purpose, features, and value proposition.
+	•	/account/select-role - Role Selection:
+Users choose their role (Admin, Company, or Teen) during sign-up.
+	•	/account/signin - Sign In Page:
+For returning users.
+	•	/account/signup - Sign Up Page:
+Registration page with onboarding and verification steps.
+Admin Pages
+	•	/admin/dashboard - Admin Overview:
+Dashboard displaying platform performance, user metrics, session statuses, and access to details tabs.
+	•	/admin/companies - Company Management:
+Manage company registrations and verifications, with a Details Tab showing interactions (sessions, reviews, payments).
+	•	/admin/teens - Teen Verification:
+Review and approve teen verifications, with a Details Tab logging participation and interactions.
+	•	/admin/sessions - Session Monitoring:
+View all focus groups and a Survey Details Tab aggregating relevant data.
+Company Pages
+	•	/company/dashboard - Company Overview:
+Personalized dashboard showing session performance, billing information, and aggregated teen reviews.
+	•	/company/sessions - Session Management:
+Tools for creating, editing, and monitoring focus group sessions.
+	•	/company/reviews - Review Management:
+Interface to view and analyze teen reviews and ratings.
+Teen Pages
+	•	/teen/dashboard - Teen Dashboard:
+Dashboard featuring a side menu with:
+	•	Home/Swipe Interface: Browse focus group cards.
+	•	My Sessions: List sessions the teen has joined.
+	•	Analytics: Visual charts and averages (payment, session time, ratings).
+	•	Settings: Modify profile settings (with unmodifiable core fields: full name, age, email, username, birthplace).
+	•	Help/Tutorials: Onboarding guides, tooltips, and FAQs.
+
+5. Detailed Platform Features
+Teen Experience
+	•	Swipe-Based Interaction:
+Each card displays:
+	•	Earnings Calculation:
+Net payout after the performance-based commission.
+	•	Session Details:
+Time, duration, scheduled date/time, mode (in-person/online).
+	•	Company Profile:
+Name, logo/picture, and session description.
+	•	Availability:
+Real-time count of available spots.
+	•	Onboarding & Profile Setup:
+Collect demographic data (interests, cultural background, location) using predetermined checkboxes; include additional optional questions to boost matching opportunities.
+A settings wheel lets teens update most of their profile (except core unmodifiable fields).
+	•	Performance, Ratings & Feedback:
+Post-session ratings (based on the last five sessions) are displayed; teens can review companies in a Google Reviews–like format.
+	•	Student Analytics Dashboard:
+Visualizes averages (payment, session time, ratings) using charts, graphs, filtering options, and CSV export.
+	•	Engagement Features:
+Real-time notifications, calendar integration, and onboarding tutorials/tooltips.
+Company Experience
+	•	Session Creation & Management:
+Use a Homey/Chore-inspired interface to create focus group cards with demographic filters and cost breakdowns.
+	•	Review & Payment Management:
+View aggregated teen reviews, monitor session analytics, and apply manual bonus flags (via a “reward” button) for five-star ratings.
+Filtering options allow companies to view which teens have been previously engaged.
+	•	Political/Policy Beliefs Section:
+Each company profile includes a dedicated section (curated/uploaded by admins) featuring a brief summary with links to in-depth information.
+Payment & Billing Logic
+	•	Per-Participant Billing:
+Companies set a flat rate for each teen participant.
+	•	Dynamic Revenue Share:
+Commission is deducted based on teen performance ratings:
+	•	5.0–4.0 stars: 10%
+	•	4.0–3.0 stars: 20%
+	•	3.0–2.0 stars: 30%
+	•	2.0–1.0 stars: 40%
+	•	1.0–0.0 stars: 50%
+	•	Bonus Application:
+Companies can manually flag eligible teens (via a “reward” button) for an extra 5% bonus, which is taken from the company’s cut.
+	•	Payment Processing:
+Supports Venmo, PayPal, and direct bank transfers, with options for instant transfers.
+The admin section tracks total funds owed, detailed expenses, and all transactions.
+Revenue & Business Model
+	•	Primary Revenue:
+Companies are charged per teen participant per session.
+	•	Commission Model:
+The platform deducts a performance-based commission from each session fee.
+	•	Optional Bonuses:
+Companies may apply manual bonuses for exceptional teen performance.
+	•	Transaction Fees:
+Small fees from payment gateway transactions may also contribute to revenue.
+	•	Future Premium Features:
+Potential add-ons include advanced analytics or AI-driven matching enhancements.
+Admin Panel (Critical)
+	•	Data Management & Oversight:
+Centralized, searchable database covering users, sessions, ratings, reviews, and payments.
+	•	Session & Payment Monitoring:
+Detailed logs and adjustable parameters for session and payment management.
+	•	Reporting, Analytics & Details Tabs:
+Custom dashboards with charts, graphs, summary statistics, and export options (CSV).
+Alerts/notifications are sent for any anomalies in metrics.
+	•	Read-Only View:
+Admins have a “View All Accounts” section that allows them to browse every teen and company account without editing capabilities.
+Data Storage & Filtering
+	•	Databases:
+	•	Teen Database:
+Stores teen profiles, demographics, session histories, reviews, and payment records.
+	•	Company Database:
+Contains company profiles, verification details, session creation data, reviews, and financial transactions.
+	•	Surveys Database:
+Maintains focus group session data (session details, participant lists, performance ratings, bonus applications, feedback).
+	•	Payment Transactions Database:
+Tracks detailed payment records, total funds, and expense data.
+	•	Audit Logging Database:
+Logs major actions (session creation, review submission, payment processing) with timestamps and user identifiers.
+	•	Real-Time Updates:
+Data is dynamically synchronized across all databases for immediate availability and accurate analytics.
+User Interface & Experience
+	•	Teen Interface:
+Tinder-like swipe functionality with gamification elements, optimized for both mobile and desktop.
+	•	Company Interface:
+Professional, Homey-inspired dashboards designed primarily for desktop use.
+	•	Admin Interface:
+Comprehensive dashboards with side menus, detailed logs, export options, and “View Details” functionality.
+
+6. Security Model
+Access Control
+	•	Role-Based Permissions:
+Specific access rights for Admins, Companies, and Teens.
+	•	Session Validation:
+Active, secure sessions validated with token-based API authentication.
+	•	API Authentication:
+Secure API endpoints using tokens/API keys.
+Data Privacy
+	•	Teen Data Protection:
+Encrypt personal data and expose only pseudonymous information to companies.
+	•	Payment Information Security:
+Handle payment data according to PCI standards using secure processors and encryption protocols.
+	•	Session Data Encryption:
+Encrypt all session data in transit and at rest.
+
+7. Development Considerations
+Front-End Development
+	•	Modern Frameworks:
+Utilize React or Flutter for dynamic, responsive interfaces.
+	•	UI/UX Best Practices:
+Ensure intuitive navigation, engaging animations, and a calming design.
+Back-End Development
+	•	Robust API Endpoints:
+Develop RESTful or GraphQL APIs for authentication, session management, filtering, rating/review processing, payment handling, and analytics.
+	•	Scalability & Security:
+Ensure a scalable back-end with strong security measures (encryption, regular audits, compliance with COPPA, GDPR, PCI).
+Testing & Quality Assurance
+	•	Comprehensive Testing:
+Implement unit, integration, and UI tests.
+	•	Performance Monitoring:
+Continuously monitor responsiveness, server load, and data synchronization.
+Audit Logging
+	•	Granularity:
+Log major actions (session creation, review submission, payment processing).
+	•	Retention:
+Keep all logs with timestamps; newer entries appear at the top.
+
+8. System Flow: From Landing Page to Dashboards
+A. Public Access & Authentication
+	1.	Landing Page (/):
+	•	Introduces the app and provides a “Choose Your Account” button.
+	•	Security: No direct account access without signing in.
+	2.	Role Selection (/account/select-role):
+	•	Users select Teen, Company, or Admin.
+	•	Leads to role-specific sign-up/sign-in pages.
+	•	Security: Must choose a role and authenticate; direct URL access to dashboards is blocked.
+	3.	Sign In/Sign Up Pages (/account/signin and /account/signup):
+	•	Teens:
+Complete sign-up with demographic data, parental consent, and identity verification; data is stored in the Teen Database.
+	•	Companies:
+Complete sign-up with business email verification; data is stored in the Company Database.
+	•	Admins:
+Use code-based sign-in; gain access to the Admin Dashboard.
+	•	Security: These pages are the only gateways to account dashboards.
+B. Account Dashboards & Side Menu Navigation
+	1.	Teen Dashboard (/teen/dashboard):
+	•	Side Menu Tabs:
+	•	Home/Swipe Interface: Browse focus group cards.
+	•	My Sessions: List of sessions joined.
+	•	Analytics: Charts/graphs showing averages (payment, session time, ratings) with export options.
+	•	Settings: Update profile (except unmodifiable fields).
+	•	Help/Tutorials: Onboarding guides and FAQs.
+	2.	Company Dashboard (/company/dashboard):
+	•	Side Menu Tabs:
+	•	Dashboard/Home: Overview of session performance and key metrics.
+	•	Sessions: Create and manage sessions.
+	•	Reviews: View teen reviews and ratings.
+	•	Payment Processing: Details on payments, expenses, and commission breakdowns.
+	•	Bonus Application: Flag eligible teens for a 5% bonus and filter sessions.
+	•	Settings: Company profile management.
+	3.	Admin Dashboard (/admin/dashboard):
+	•	Side Menu Tabs:
+	•	Dashboard/Home: High-level platform metrics.
+	•	Companies: Manage company accounts and view detailed interactions.
+	•	Teens: Review teen verifications and participation data.
+	•	Sessions/Surveys: Monitor all focus group sessions.
+	•	Audit Logs: View major actions with export options.
+	•	Read-Only View (All Accounts): Browse every account without editing.
+	•	Details Tabs:
+	•	Company Details: In-depth logs of sessions, reviews, payments.
+	•	Teen Details: Detailed logs of session participation, reviews, payments.
+	•	Survey Details: Aggregated session data, feedback, and performance metrics.
+C. Data Flow & Interconnection
+	•	Data Storage:
+	•	Teen Database: Teen profiles, demographics, sessions, reviews, payments.
+	•	Company Database: Company profiles, verification, sessions, reviews, transactions.
+	•	Surveys Database: Session details, participant lists, performance ratings, bonus flags, feedback.
+	•	Payment Transactions Database: Detailed payment records.
+	•	Audit Logging Database: Major action logs with timestamps.
+	•	Integration:
+	•	Data flows from the onboarding process into the respective databases.
+	•	The Admin “View Details” function aggregates and correlates data across all databases.
+D. Payment & Bonus Flow
+	•	Companies set session rates.
+	•	Teens join sessions and receive performance ratings.
+	•	A commission is calculated based on performance.
+	•	Companies can flag eligible teens for an extra 5% bonus via the “reward” button.
+	•	Payment details are processed (via Venmo, PayPal, or bank transfer) and stored.
+	•	Admin Dashboard tracks overall financial data (funds owed, expenses, revenue).
+E. Audit Logging
+	•	Major actions (session creation, review submission, payment processing) are logged with timestamps.
+	•	Logs are stored in the Audit Logging Database and accessible via the Admin Dashboard.
+Final Summary
+	•	Access Flow:
+Users must go through the Landing Page → Role Selection → Role-specific Sign In/Sign Up → Onboarding. Direct dashboard access without signing in is prohibited.
+	•	Dashboards:
+Each role has its own dashboard with a side menu for navigation among sub-pages (Home, Sessions, Reviews, Analytics, Settings, etc.).
+	•	Databases:
+The system uses separate databases for Teens, Companies, Surveys, Payment Transactions, and Audit Logging.
+	•	Interconnected Data:
+Admins can use the “View Details” feature to see a comprehensive, interconnected view of sessions, reviews, payments, and other metrics.
+	•	Payment & Bonus Flow:
+Companies set session rates; teen performance determines commission; companies can flag bonuses manually (with eligible teens automatically flagged via a “reward” button); all payment data is tracked.
+	•	Security & Audit Logging:
+Role-based access and API authentication ensure secure sessions. Audit logs track major actions, and data is encrypted as required.
+	•	User Experience:
+The teen interface uses a Tinder-like swipe system with gamification, while the company and admin interfaces are professional and designed for desktop use, with clear navigation and reporting tools.
+Please review this final prompt along with the expanded flowchart and let me know if any further adjustments or additional details are required.
+
+

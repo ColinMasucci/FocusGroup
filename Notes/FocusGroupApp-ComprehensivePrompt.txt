@@ -1,0 +1,244 @@
+Focus Group App – Full Detailed Prompt
+
+1. Overview & App Purpose
+Focus Group App is a platform designed to connect companies with teens for market research and feedback. The app enables companies to gather real user insights while allowing teens to participate in focus groups anonymously. The platform also manages feedback, reviews, and secure payments. Its primary goals are to:
+	•	Let companies schedule and manage focus groups.
+	•	Allow companies to interact with teens without revealing personal identities.
+	•	Enable both companies and teens to rate and review each other.
+	•	Process secure payments with performance-based earnings.
+
+2. User Roles and How They Sign In
+There are three roles:
+	•	Admins manage the entire system.
+	•	Companies create and manage focus groups.
+	•	Teens participate in focus groups and provide feedback.
+Each role has its own sign-up and log-in process:
+	•	Admins use a code-based login.
+	•	Companies use a business email sign-up and log-in.
+	•	Teens sign up with their demographic details and complete identity verification (using a third-party service like Onfido/Jumio and email/phone parental consent). (Optional facial recognition can be added later.)
+Only signed-in users can access any dashboards or account pages. Direct access without logging in is not allowed.
+
+3. Databases
+The app uses separate databases to organize data:
+	•	Teen Database: Holds teen profiles, demographic details, interests, session history, reviews, and payment records.
+	•	Company Database: Contains company profiles, business details, verification status, focus group session details, reviews, and transaction records.
+	•	Surveys Database: Keeps data on focus group sessions, including time, duration, mode (in-person or online), lists of participants, performance ratings, bonus flags, and feedback.
+	•	Payment Transactions Database: Records all payment details, total funds, expenses, and commission information.
+	•	Audit Logging Database: Logs major actions (like session creation, review submissions, payment processing) with timestamps and user identifiers.
+
+4. Page Structure
+Public Pages
+	1.	Landing Page (/):
+	•	Explains the app and its benefits.
+	•	Contains two buttons:
+	•	Sign Up: For new users to create an account.
+	•	Log In: For returning users to access an existing account.
+	•	No account data is visible here.
+	2.	Role Selection Page (/account/select-role):
+	•	Users choose one of the three roles: Teen, Company, or Admin.
+	•	This page directs users to the specific Sign Up or Log In page for their role.
+	3.	Sign Up and Log In Pages (/account/signin and /account/signup):
+	•	Teens:
+	•	Sign Up collects demographic data (with checkboxes for interests and product preferences) and verifies identity using a third-party service plus parental consent.
+	•	Log In checks credentials stored in the Teen Database.
+	•	Companies:
+	•	Sign Up collects business details and verifies via email.
+	•	Log In checks credentials stored in the Company Database.
+	•	Admins:
+	•	Log In is done via a code-based method.
+Teen Pages
+	1.	Teen Dashboard (/teen/dashboard):
+	•	The dashboard has a side menu with these tabs:
+	•	Home/Swipe Interface: A Tinder-like screen where teens swipe right to apply for focus groups and left to reject.
+	•	My Sessions: A list of focus groups the teen has joined.
+	•	Analytics: Charts and graphs showing average earnings, average session time, and average ratings; includes an option to export data as CSV.
+	•	Settings: Allows teens to update non-core details (they cannot change full name, age, email, username, or birthplace).
+	•	Help/Tutorials: Provides onboarding guides and FAQs.
+Company Pages
+	1.	Company Dashboard (/company/dashboard):
+	•	The side menu includes:
+	•	Dashboard/Home: Overview of session performance and key metrics.
+	•	Sessions:
+	•	A page to create new focus group sessions.
+	•	A management page to view and edit current and past sessions.
+	•	Reviews: A page displaying teen reviews and ratings.
+	•	Payment Processing: A page showing payment details, commission calculations, and expense tracking.
+	•	Bonus Application: A section where companies can see which teens are eligible for a 5% bonus. Companies can flag teens using a “reward” button. There are filters to see which teens they have already worked with.
+	•	Settings: For company profile management.
+Admin Pages
+	1.	Admin Dashboard (/admin/dashboard):
+	•	The admin side menu has:
+	•	Dashboard/Home: Displays overall system performance and key metrics.
+	•	Companies Management: A page to review all company accounts.
+	•	Company Details Tab: Shows each company’s focus group sessions, teen reviews, and payment history.
+	•	Teens Management: A page to review all teen accounts.
+	•	Teen Details Tab: Shows session participation, reviews, and payment data.
+	•	Sessions/Surveys Monitoring: A page to review all focus group sessions.
+	•	Survey Details Tab: Displays aggregated session data, feedback, and performance metrics.
+	•	Audit Logs: A page showing logs of all major actions with timestamps.
+	•	Read-Only View (All Accounts): Allows the admin to view all teen and company accounts without the ability to edit any data.
+
+5. Detailed Functional Flows and Connections
+Public Access and Authentication Flow
+	•	Landing Page:
+	•	Users land on the homepage.
+	•	They see two buttons: Sign Up and Log In.
+	•	Role Selection:
+	•	After clicking either button, users choose their role on the Role Selection page.
+	•	Sign Up / Log In:
+	•	Teens:
+	•	For new accounts, teens complete the Sign Up process, entering demographic details and verifying their identity (data is saved in the Teen Database).
+	•	Returning teens use the Log In page to access their account.
+	•	Companies:
+	•	New companies use the Sign Up page to enter business information and verify their email (data is saved in the Company Database).
+	•	Returning companies use the Log In page.
+	•	Admins:
+	•	Admins sign in using a code-based method.
+	•	Security:
+	•	No user can access any dashboard or account page without going through the Sign Up or Log In process.
+Dashboard and Navigation Flow
+	•	Teen Dashboard:
+	•	Once a teen signs in, they reach the Teen Dashboard.
+	•	The Home/Swipe Interface pulls focus group opportunities from the Surveys Database, filtering based on the teen’s demographics stored in the Teen Database.
+	•	The My Sessions page shows a history of sessions stored in both the Teen and Surveys Databases.
+	•	Analytics aggregates data from the Teen Database and Payment Transactions Database.
+	•	Settings updates are written back to the Teen Database.
+	•	Company Dashboard:
+	•	After a company signs in, they see their Dashboard.
+	•	Session Creation and Management pages read and write session data to the Surveys Database and update records in the Company Database.
+	•	Reviews pull data from the Surveys Database and Teen Reviews in the Teen Database.
+	•	Payment Processing displays data from the Payment Transactions Database.
+	•	The Bonus Application page allows companies to flag teens for extra bonuses; this update is saved in the Surveys and Payment Transactions Databases.
+	•	Admin Dashboard:
+	•	Admins, after signing in, view the Admin Dashboard, which aggregates data from all databases:
+	•	Companies Management shows data from the Company and Surveys Databases.
+	•	Teens Management shows data from the Teen and Surveys Databases.
+	•	Sessions/Surveys Monitoring displays data from the Surveys Database.
+	•	Audit Logs come from the Audit Logging Database.
+	•	The Read-Only View pulls data from both the Teen and Company Databases.
+	•	The Details Tabs provide a detailed view of data intersections among companies, teens, and sessions.
+Payment and Bonus Flow
+	•	Companies set session rates when creating a focus group.
+	•	Teens join sessions using the swipe interface.
+	•	Performance data (reviews, ratings) is recorded and stored.
+	•	The system calculates commissions from the flat rate based on the teen’s performance (stored in the Payment Transactions Database).
+	•	Companies can flag a teen for a 5% bonus using a “reward” button; this flag is saved and reflected in the payment calculation.
+	•	All payment data, expenses, and revenue are tracked and displayed in the Company Dashboard and the Admin Dashboard.
+Audit Logging
+	•	All major actions (session creation, review submissions, payment processing) are logged with timestamps.
+	•	Logs are stored in the Audit Logging Database and can be viewed in the Admin Audit Logs page.
+Flow chart
+flowchart TD
+    %% Public Access & Role Selection
+    A[Landing Page (/)]
+    A --> B[Choose Your Account (/account/select-role)]
+    
+    %% Landing Page: Two Buttons for Sign Up and Log In
+    A --> |Sign Up| X[Proceed to Sign Up]
+    A --> |Log In| Y[Proceed to Log In]
+    
+    %% Role-specific paths from Role Selection
+    B --> |Teen| C[Teen Sign In/Sign Up Choice]
+    B --> |Company| D[Company Sign In/Sign Up Choice]
+    B --> |Admin| E[Admin Sign In]
+    
+    %% Teen Path: Separate Sign Up and Log In
+    C --> F1[Teen Sign Up (/account/teen/signup)]
+    C --> F2[Teen Log In (/account/teen/signin)]
+    
+    F1 --> G1[Teen Onboarding (Demographics, Interests, Verification)]
+    F2 --> G2[Validate Teen Credentials]
+    
+    G1 --> H1[Store in Teen Database]
+    G2 --> H1
+    
+    H1 --> I1[Teen Dashboard (/teen/dashboard)]
+    I1 --> J1[Home/Swipe Interface]
+    I1 --> J2[My Sessions]
+    I1 --> J3[Analytics]
+    I1 --> J4[Settings]
+    I1 --> J5[Help/Tutorials]
+    
+    %% Company Path: Separate Sign Up and Log In
+    D --> F3[Company Sign Up (/account/company/signup)]
+    D --> F4[Company Log In (/account/company/signin)]
+    
+    F3 --> G3[Company Onboarding (Business Info, Email Verification)]
+    F4 --> G4[Validate Company Credentials]
+    
+    G3 --> H2[Store in Company Database]
+    G4 --> H2
+    
+    H2 --> I2[Company Dashboard (/company/dashboard)]
+    I2 --> J6[Dashboard/Home]
+    I2 --> J7[Session Creation & Management]
+    I2 --> J8[Review Management]
+    I2 --> J9[Payment Processing]
+    I2 --> J10[Bonus Application & Filtering]
+    I2 --> J11[Settings]
+    
+    %% Admin Path
+    E --> F5[Admin Sign In (/admin/signin)]
+    F5 --> G5[Admin Verification (Code-based)]
+    G5 --> H3[Admin Account Setup]
+    H3 --> I3[Admin Dashboard (/admin/dashboard)]
+    I3 --> J12[Dashboard/Home]
+    I3 --> J13[Companies Management]
+    I3 --> J14[Teens Management]
+    I3 --> J15[Sessions/Surveys Monitoring]
+    I3 --> J16[Audit Logs]
+    I3 --> J17[Read-Only View: All Accounts]
+    I3 --> J18[Details Tabs]
+    
+    %% Details Tabs Expansion (Admin)
+    J18 --> K1[Company Details (Sessions, Reviews, Payments)]
+    J18 --> K2[Teen Details (Participation, Reviews, Payments)]
+    J18 --> K3[Survey Details (Interactions, Feedback, Metrics)]
+    
+    %% Payment & Bonus Flow
+    J1 --> L[Join Session]
+    L --> M[Record Performance & Reviews]
+    M --> N[Calculate Commission & Bonus Eligibility]
+    N --> O[Payment Processing (Venmo/PayPal/Bank)]
+    O --> P[Store in Payment Transactions Database]
+    P --> Q[Admin Financial Tracking]
+    
+    %% Audit Logging Flow
+    M --> R[Log Major Actions]
+    R --> S[Store in Audit Logging Database]
+    
+    %% Emphasize: Access to dashboards only via Sign In/Sign Up
+    A --- |"Direct access denied without logging in"| T[Dashboards Inaccessible Without Authentication]
+7. Phased Rollout and Modular Approach
+You will build this app one module at a time in create.xyz. The modules are:
+	1.	Public Access & Role Selection:
+Build the Landing Page with two buttons (Sign Up and Log In) and the Role Selection page.
+	2.	Authentication & Onboarding:
+Develop separate Sign Up and Log In pages for Teens and Companies, along with the Admin Sign In page. Ensure onboarding collects data and stores it in the Teen or Company Database.
+	3.	Dashboards:
+Create the Teen, Company, and Admin Dashboards with their side menus and sub-pages.
+Link each sub-page to the correct database(s) for real-time data display.
+	4.	Data Integration & Interconnections:
+Connect the Surveys Database, Payment Transactions Database, and Audit Logging Database so that all interactions (sessions, reviews, payments) are visible.
+Build the Admin “View Details” pages to aggregate this data.
+	5.	Payment and Bonus System:
+Integrate payment processing (Venmo, PayPal, bank transfers) and implement the commission calculation and bonus flag system.
+	6.	Advanced Analytics & Audit Logging:
+Implement charts, graphs, export options, and complete audit logging for system actions.
+Each module is self-contained with explicit data flows. When complete, they all link together to form the full app.
+
+Final Summary
+	•	Navigation Flow:
+Users land on the public Landing Page, then select their role. They either create a new account (Sign Up) or log in to an existing account (Log In).
+All account access is through the authentication pages, and dashboards are not accessible by direct URL entry.
+	•	Dashboards:
+Each role (Teen, Company, Admin) has a dashboard with a side menu that directs users to specific sub-pages.
+Data is stored in separate databases for Teens, Companies, Surveys, Payment Transactions, and Audit Logging.
+	•	Data Interconnections:
+The Admin Dashboard’s “View Details” pages show complete data on sessions, reviews, and payments by pulling data from all databases.
+	•	Payment Flow:
+Companies set session rates, teen performance determines commission, and bonus eligibility is flagged with a “reward” button. Payment records are tracked in the Payment Transactions Database.
+	•	Security:
+All access is secured through the Sign Up/Log In process. Major actions are logged in the Audit Logging Database.
+
+

@@ -1,0 +1,80 @@
+flowchart TD
+    %% Public Access & Role Selection
+    A[Landing Page (/)]
+    A --> B[Choose Your Account (/account/select-role)]
+    
+    %% Landing Page: Two Buttons for Sign Up and Log In
+    A --> |Sign Up| X[Proceed to Sign Up]
+    A --> |Log In| Y[Proceed to Log In]
+    
+    %% Role-specific paths from Role Selection
+    B --> |Teen| C[Teen Sign In/Sign Up Choice]
+    B --> |Company| D[Company Sign In/Sign Up Choice]
+    B --> |Admin| E[Admin Sign In]
+    
+    %% Teen Path: Separate Sign Up and Log In
+    C --> F1[Teen Sign Up (/account/teen/signup)]
+    C --> F2[Teen Log In (/account/teen/signin)]
+    
+    F1 --> G1[Teen Onboarding (Demographics, Interests, Verification)]
+    F2 --> G2[Validate Teen Credentials]
+    
+    G1 --> H1[Store in Teen Database]
+    G2 --> H1
+    
+    H1 --> I1[Teen Dashboard (/teen/dashboard)]
+    I1 --> J1[Home/Swipe Interface]
+    I1 --> J2[My Sessions]
+    I1 --> J3[Analytics]
+    I1 --> J4[Settings]
+    I1 --> J5[Help/Tutorials]
+    
+    %% Company Path: Separate Sign Up and Log In
+    D --> F3[Company Sign Up (/account/company/signup)]
+    D --> F4[Company Log In (/account/company/signin)]
+    
+    F3 --> G3[Company Onboarding (Business Info, Email Verification)]
+    F4 --> G4[Validate Company Credentials]
+    
+    G3 --> H2[Store in Company Database]
+    G4 --> H2
+    
+    H2 --> I2[Company Dashboard (/company/dashboard)]
+    I2 --> J6[Dashboard/Home]
+    I2 --> J7[Session Creation & Management]
+    I2 --> J8[Review Management]
+    I2 --> J9[Payment Processing]
+    I2 --> J10[Bonus Application & Filtering]
+    I2 --> J11[Settings]
+    
+    %% Admin Path
+    E --> F5[Admin Sign In (/admin/signin)]
+    F5 --> G5[Admin Verification (Code-based)]
+    G5 --> H3[Admin Account Setup]
+    H3 --> I3[Admin Dashboard (/admin/dashboard)]
+    I3 --> J12[Dashboard/Home]
+    I3 --> J13[Companies Management]
+    I3 --> J14[Teens Management]
+    I3 --> J15[Sessions/Surveys Monitoring]
+    I3 --> J16[Audit Logs]
+    I3 --> J17[Read-Only View: All Accounts]
+    I3 --> J18[Details Tabs]
+    
+    %% Details Tabs Expansion (Admin)
+    J18 --> K1[Company Details (Sessions, Reviews, Payments)]
+    J18 --> K2[Teen Details (Participation, Reviews, Payments)]
+    J18 --> K3[Survey Details (Interactions, Feedback, Metrics)]
+    
+    %% Payment & Bonus Flow
+    J1 --> L[Join Session]
+    L --> M[Record Performance & Reviews]
+    M --> N[Calculate Commission & Bonus Eligibility]
+    N --> O[Payment Processing (Venmo/PayPal/Bank)]
+    O --> P[Store in Payment Transactions Database]
+    P --> Q[Admin Financial Tracking]
+    
+    %% Audit Logging Flow
+    M --> R[Log Major Actions]
+    R --> S[Store in Audit Logging Database]
+
+
