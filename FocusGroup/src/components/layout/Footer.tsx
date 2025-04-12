@@ -1,5 +1,5 @@
 const Footer = () => (
-    <footer style={{ padding: "1rem", marginTop: "2rem", background: "#f0f0f0" }}>
+    <footer className="p-3 bg-gray-200 max-w-full w-screen overflow-clip">
       <p>© 2025 FocusGroup</p>
     </footer>
   );

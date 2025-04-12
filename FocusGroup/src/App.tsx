@@ -5,11 +5,13 @@ import Footer from "./components/layout/Footer";
 const App = () => {
   return (
     <>
-      <Header />
-      <main style={{ padding: "1rem" }}>
-        <PublicRoutes />
-      </main>
-      <Footer />
+      <div className="flex flex-col h-screen w-full overflow-x-hidden">
+        
+        <main className="flex-1 overflow-y-auto">
+          <div className="h-full"><PublicRoutes /></div>
+        </main>
+        
+      </div>
     </>
   );
 };

@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 
 const Header = () => (
-  <header style={{ padding: "1rem", background: "#f0f0f0" }}>
+  <header className="p-3 bg-gray-200 max-w-full w-screen overflow-clip">
     <Link to="/">FocusGroup</Link>
   </header>
 );
