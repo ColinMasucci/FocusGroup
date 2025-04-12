@@ -1,14 +1,30 @@
-import { useNavigate } from "react-router-dom";
+import RegistrationCard from '../components/RegistrationCard.tsx';
+import companyImage from '../assets/company_image.jpg';
+import reviewerImage from '../assets/happy_teens_group_pic.jpg';
+
 
 function RegistrationSelection() {
-  const navigate = useNavigate();
 
   return (
-    <div className="p-8">
-      <h2>Choose your account type</h2>
-      <div className="flex gap-4 mt-4">
-        <button onClick={() => navigate("/register/reviewer")}>Reviewer</button>
-        <button onClick={() => navigate("/register/company")}>Company</button>
+    <div>
+      <div className="bg-gray-100 h-screen w-screen p-8 flex flex-col items-center justify-center">
+        <h1>Choose your account type</h1>
+        <div className='flex flex-row'>
+          <RegistrationCard
+            logo={companyImage}
+            title="Company"
+            description="A Company Account will be able to post Focus Group opportunities for young Reviewers to give feedback."
+            buttonLabel="Pick"
+            link = "/register/company"
+          />
+          <RegistrationCard
+            logo={reviewerImage}
+            title="Reviewer"
+            description="A Reviewer Account will be able to attend Focus Group opportunities to give feedback on products they care about."
+            buttonLabel="Pick"
+            link = "/register/reviewer"
+          />
+        </div>
       </div>
     </div>
   );
