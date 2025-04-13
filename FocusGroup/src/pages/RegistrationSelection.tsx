@@ -15,14 +15,14 @@ function RegistrationSelection() {
             title="Company"
             description="A Company Account will be able to post Focus Group opportunities for young Reviewers to give feedback."
             buttonLabel="Pick"
-            link = "/register/company"
+            link = "/registration/company"
           />
           <RegistrationCard
             logo={reviewerImage}
             title="Reviewer"
             description="A Reviewer Account will be able to attend Focus Group opportunities to give feedback on products they care about."
             buttonLabel="Pick"
-            link = "/register/reviewer"
+            link = "/registration/reviewer"
           />
         </div>
       </div>

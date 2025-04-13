@@ -10,7 +10,6 @@ const App = () => {
         <main className="flex-1 overflow-y-auto">
           <div className="h-full"><PublicRoutes /></div>
         </main>
-        
       </div>
     </>
   );

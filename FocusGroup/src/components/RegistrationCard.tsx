@@ -19,7 +19,7 @@ const RegistrationCard: React.FC<RegistrationCardProps> = ({
   link
 }) => {
   return (
-    <Card sx={{ maxWidth: 400, margin: 2}}>
+    <Card sx={{ width: 400, margin: 2}}>
       <CardMedia
         sx={{ height: 180 }}
         image={logo}
