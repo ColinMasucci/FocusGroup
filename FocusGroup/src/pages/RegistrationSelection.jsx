@@ -3,7 +3,7 @@ import companyImage from '../assets/company_image.jpg';
 import reviewerImage from '../assets/happy_teens_group_pic.jpg';
 
 
-function RegistrationSelection() {
+const RegistrationSelection = () => {
 
   return (
     <div>

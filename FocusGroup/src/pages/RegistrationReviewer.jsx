@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Card, Button, TextField, CardContent } from '@mui/material';
 
-const RegistrationReviewer: React.FC = () => {
+const RegistrationReviewer = () => {
   const [formData, setFormData] = useState({
     companyName: "",
     contactName: "",
@@ -12,12 +12,12 @@ const RegistrationReviewer: React.FC = () => {
     description: ""
   });
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     console.log("Submitting Company Registration:", formData);
     // Add your API submission logic here
