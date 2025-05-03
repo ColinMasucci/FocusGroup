@@ -1,4 +1,4 @@
-import RegistrationCard from '../RegistrationCard.tsx';
+import RegistrationCard from '../RegistrationCard.js';
 import companyImage from '../../assets/company_image.jpg';
 import reviewerImage from '../../assets/happy_teens_group_pic.jpg';
 
