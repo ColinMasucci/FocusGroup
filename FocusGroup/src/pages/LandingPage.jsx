@@ -2,11 +2,9 @@ import { Link } from "react-router-dom";
 import teensImage from '../assets/teens_on_one_phone_bg.jpg';
 import logo from '../assets/logo.png';
 import Button from '@mui/material/Button';
-import { useAuth0 } from "@auth0/auth0-react";
 
 
 const LandingPage = () => {
-  const { loginWithRedirect } = useAuth0();
   return(
     <div className="flex h-screen w-screen">
       {/* Left Side - Image */}
@@ -26,10 +24,10 @@ const LandingPage = () => {
           Get started by signing in or creating a free account.
         </p>
         <div className="flex gap-4">
-          <Button variant="contained" sx={{backgroundColor: '#052759', color: 'white', '&:hover': { backgroundColor: '#031838', color: "white" }}} component={Link} to="/registration">
+          <Button variant="contained" sx={{backgroundColor: '#052759', color: 'white', '&:hover': { backgroundColor: '#031838', color: "white" }}} component={Link} to="/signup">
             Sign Up
           </Button>
-          <Button variant="contained" sx={{backgroundColor: 'white', color: '#052759', '&:hover': { backgroundColor: '#f2f2f2', color: "#031838" }}} onClick={() => loginWithRedirect()}>
+          <Button variant="contained" sx={{backgroundColor: 'white', color: '#052759', '&:hover': { backgroundColor: '#f2f2f2', color: "#031838" }}} component={Link} to="/login">
             Login
           </Button>
         </div>

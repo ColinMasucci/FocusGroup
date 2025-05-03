@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { Card, Button, CardContent } from '@mui/material';
-import FormTextField from "../components/FormTextField";
+import FormTextField from "../FormTextField";
+import { useNavigate } from 'react-router-dom';
+
 
 const RegistrationReviewer = () => {
   const [formData, setFormData] = useState({
@@ -13,6 +15,9 @@ const RegistrationReviewer = () => {
     description: ""
   });
 
+  const navigate = useNavigate();
+
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
@@ -21,6 +26,7 @@ const RegistrationReviewer = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log("Submitting Company Registration:", formData);
+    navigate('/dashboard/reviewer');
     // Add your API submission logic here
   };
 

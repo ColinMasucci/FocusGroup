@@ -8,7 +8,8 @@ interface RegistrationCardProps {
   title: string;
   description: string;
   buttonLabel: string;
-  link: string;
+  role: string;
+  setRole: Function;
 }
 
 const RegistrationCard: React.FC<RegistrationCardProps> = ({
@@ -16,7 +17,8 @@ const RegistrationCard: React.FC<RegistrationCardProps> = ({
   title,
   description,
   buttonLabel,
-  link
+  role,
+  setRole
 }) => {
   return (
     <Card sx={{ width: 400, margin: 2}}>
@@ -42,7 +44,7 @@ const RegistrationCard: React.FC<RegistrationCardProps> = ({
             color: 'white',
             '&:hover': { backgroundColor: '#031838', color: "white" }
           }}
-          component={Link} to={link}
+          onClick={() => setRole(role)}
         >
           {buttonLabel}
         </Button>
