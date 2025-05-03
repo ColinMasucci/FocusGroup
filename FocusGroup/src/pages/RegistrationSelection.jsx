@@ -7,7 +7,7 @@ const RegistrationSelection = () => {
 
   return (
     <div>
-      <div className="bg-gray-100 h-screen w-screen p-8 flex flex-col items-center justify-center">
+      <div className="bg-gradient-to-br from-blue-50 to-indigo-50 h-screen w-screen p-8 flex flex-col items-center justify-center">
         <h1>Choose your account type</h1>
         <div className='flex flex-row'>
           <RegistrationCard

@@ -38,9 +38,9 @@ const RegistrationCard: React.FC<RegistrationCardProps> = ({
           variant="contained"
           size="large"
           sx={{
-            backgroundColor: '#FF5733',
+            backgroundColor: '#052759',
             color: 'white',
-            '&:hover': { backgroundColor: '#C70039', color: "white" }
+            '&:hover': { backgroundColor: '#031838', color: "white" }
           }}
           component={Link} to={link}
         >

@@ -25,7 +25,7 @@ const RegistrationCompany = () => {
   };
 
   return (
-    <div className="w-full flex justify-center p-5 bg-gray-100">
+    <div className="w-full flex justify-center p-5 bg-gradient-to-br from-blue-50 to-indigo-50">
       <Card className="w-110">
         <CardContent className="space-y-4">
           <h2 className="text-center text-4xl mb-10 font-bold">Company Registration</h2>

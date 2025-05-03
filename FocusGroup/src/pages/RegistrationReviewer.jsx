@@ -1,14 +1,15 @@
 import React, { useState } from "react";
-import { Card, Button, TextField, CardContent } from '@mui/material';
+import { Card, Button, CardContent } from '@mui/material';
+import FormTextField from "../components/FormTextField";
 
 const RegistrationReviewer = () => {
   const [formData, setFormData] = useState({
-    companyName: "",
+    fullName: "",
     contactName: "",
     email: "",
     phone: "",
     industry: "",
-    website: "",
+    age: "",
     description: ""
   });
 
@@ -24,37 +25,75 @@ const RegistrationReviewer = () => {
   };
 
   return (
-    <div className="max-w-xl mx-auto mt-10 p-4">
-      <Card>
+    <div className="w-full flex justify-center p-5 bg-gradient-to-br from-blue-50 to-indigo-50">
+      <Card className="w-110">
         <CardContent className="space-y-4">
-          <h2 className="text-2xl font-bold">Company Registration</h2>
+          <h2 className="text-center text-4xl mb-10 font-bold">Reviewer Registration</h2>
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
-              {/* <Label htmlFor="companyName">Company Name</Label> */}
-              <TextField id="companyName" name="companyName" value={formData.companyName} onChange={handleChange} required />
+                <FormTextField
+                    id="fullName"
+                    name="fullName"
+                    value={formData.fullName}
+                    label="Full Name"
+                    onChange={handleChange}
+                    required
+                />
+
             </div>
             <div>
-              {/* <Label htmlFor="contactName">Contact Name</Label> */}
-              <TextField id="contactName" name="contactName" value={formData.contactName} onChange={handleChange} required />
+                <FormTextField
+                    id="contactName"
+                    name="contactName"
+                    value={formData.contactName}
+                    label="Contact Name"
+                    onChange={handleChange}
+                    required
+                />
             </div>
             <div>
-              {/* <Label htmlFor="email">Email</Label> */}
-              <TextField id="email" name="email" type="email" value={formData.email} onChange={handleChange} required />
+                <FormTextField
+                    id="email"
+                    name="email"
+                    value={formData.email}
+                    label="Email"
+                    onChange={handleChange}
+                    required
+                    type="email"
+                />
             </div>
             <div>
-              {/* <Label htmlFor="phone">Phone Number</Label> */}
-              <TextField id="phone" name="phone" type="tel" value={formData.phone} onChange={handleChange} />
+                <FormTextField
+                    id="phone"
+                    name="phone"
+                    value={formData.phone}
+                    label="Phone Number"
+                    onChange={handleChange}
+                    required
+                    type="tel"
+                />
             </div>
             <div>
-              {/* <Label htmlFor="industry">Industry</Label> */}
-              <TextField id="industry" name="industry" value={formData.industry} onChange={handleChange} />
+                <FormTextField
+                    id="industry"
+                    name="industry"
+                    value={formData.industry}
+                    label="Industry"
+                    onChange={handleChange}
+                    required
+                />
             </div>
             <div>
-              {/* <Label htmlFor="website">Website</Label> */}
-              <TextField id="website" name="website" value={formData.website} onChange={handleChange} />
+                <FormTextField
+                    id="age"
+                    name="age"
+                    value={formData.age}
+                    label="Age (Optional)"
+                    onChange={handleChange}
+                />
             </div>
             <div>
-              {/* <Label htmlFor="description">Brief Description</Label> */}
+              <h2 className="font-bold">Give a quick bio description so Companies can learn more about you! (You can change this later at any time.)</h2>
               <textarea
                 id="description"
                 name="description"
@@ -62,9 +101,21 @@ const RegistrationReviewer = () => {
                 rows={4}
                 value={formData.description}
                 onChange={handleChange}
+                placeholder="(Optional)"
               />
             </div>
-            <Button type="submit" className="w-full">Register</Button>
+            <Button 
+                type="submit" 
+                className="w-full"
+                variant="contained"
+                size="large"
+                sx={{
+                  backgroundColor: '#FF5733',
+                  color: 'white',
+                  '&:hover': { backgroundColor: '#C70039', color: "white" }
+                }}>   
+                Register
+            </Button>
           </form>
         </CardContent>
       </Card>

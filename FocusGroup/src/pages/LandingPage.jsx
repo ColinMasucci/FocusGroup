@@ -16,7 +16,7 @@ const LandingPage = () => {
       />
 
       {/* Right Side - Content */}
-      <div className="w-1/2 h-full bg-gray-100 flex flex-col justify-center items-center p-8">
+      <div className="w-1/2 h-full bg-gradient-to-br from-blue-50 to-indigo-50 flex flex-col justify-center items-center p-8">
         <img src={logo} alt="FocusGroup Logo" className="h-12 w-12 mb-6 rounded-full object-cover" />
         <h1 className="text-4xl font-bold mb-4">Welcome to FocusGroup</h1>
         <p className="text-lg text-gray-600 mb-6 text-center">
@@ -26,11 +26,11 @@ const LandingPage = () => {
           Get started by signing in or creating a free account.
         </p>
         <div className="flex gap-4">
-          <Button variant="contained" style={{backgroundColor: '#052759', color: 'white'}} component={Link} to="/registration">
+          <Button variant="contained" sx={{backgroundColor: '#052759', color: 'white', '&:hover': { backgroundColor: '#031838', color: "white" }}} component={Link} to="/registration">
             Sign Up
           </Button>
-          <Button variant="contained" style={{backgroundColor: '#2ac153', color: 'white'}} onClick={() => loginWithRedirect()}>
-            Sign In
+          <Button variant="contained" sx={{backgroundColor: 'white', color: '#052759', '&:hover': { backgroundColor: '#f2f2f2', color: "#031838" }}} onClick={() => loginWithRedirect()}>
+            Login
           </Button>
         </div>
       </div>
