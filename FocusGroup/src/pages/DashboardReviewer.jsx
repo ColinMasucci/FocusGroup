@@ -36,11 +36,12 @@ const DashboardReviewer = () => {
     return (
     <main className="flex flex-col sm:flex-row  bg-gray-500 min-h-screen">
       {/* Sidebar */}
-      <ReviewerSidebar activeTab={activeTab} setActiveTab={setActiveTab} />
-      
+      <div className="sm:sticky sm:top-0 sm:h-screen">
+        <ReviewerSidebar activeTab={activeTab} setActiveTab={setActiveTab} />
+      </div>
 
       {/* Main Content */}
-      <div className="flex-grow p-4 bg-gradient-to-br from-blue-50 to-indigo-50 z-0">
+      <div className="flex-grow p-4 bg-gradient-to-br from-blue-50 to-indigo-50 z-0 overflow-y-auto h-screen">
         {renderContent()}
       </div>
     </main>

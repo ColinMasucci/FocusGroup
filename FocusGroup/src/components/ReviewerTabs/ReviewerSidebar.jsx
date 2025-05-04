@@ -8,7 +8,7 @@ export default function ReviewerSidebar({ activeTab, setActiveTab }) {
 
     return(
     
-        <div className="bg-white w-full md:w-64 shadow-xl z-10 relative">
+        <div className="bg-white w-full h-full md:w-64 shadow-xl z-10 relative">
           <div className="p-6">
             <div className="text-xl font-bold text-gray-800 mb-6">Reviewer Dashboard</div>
             <div className="space-y-2">
